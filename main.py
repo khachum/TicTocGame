@@ -45,8 +45,8 @@ class TicTocGame:
     def step(self, image, pos):
         if self.check_if_step_available(image, pos):
             h, w, _ = image.shape
-            x_coord = int(pos[0] / w * 3)
-            y_coord = int(pos[1] / h * 3)
+            x_coord = int(np.clip(pos[0], 0, w-1) / w * 3)
+            y_coord = int(np.clip(pos[1], 0, h-1) / h * 3)
 
             if self.player_state == 0:
                 self.fied[y_coord, x_coord] = 2
@@ -83,8 +83,8 @@ class TicTocGame:
         if self.winner != -1:
             return False
         h, w, _ = image.shape
-        x_coord = int(pos[0] / w * 3)
-        y_coord = int(pos[1] / h * 3)
+        x_coord = int(np.clip(pos[0], 0, w - 1) / w * 3)
+        y_coord = int(np.clip(pos[1], 0, h - 1) / h * 3)
         if self.fied[y_coord, x_coord] == 0:
             return True
         return False
@@ -122,8 +122,8 @@ class TicTocGame:
                 elif self.fied[j, i] == 2:
                     image = self.draw_cross(image, x, y)
         if pos is not None:
-            x_coord = int(pos[0] / w * 3)
-            y_coord = int(pos[1] / h * 3)
+            x_coord = int(np.clip(pos[0], 0, w - 1) / w * 3)
+            y_coord = int(np.clip(pos[1], 0, h - 1) / h * 3)
             mask = np.zeros_like(image)
             if self.check_if_step_available(image, pos):
                 color = (0, 255, 0)
